@@ -1,8 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS", "Source\Ellemy.CQRS\Ellemy.CQRS.csproj", "{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{61555DCB-BB59-47E8-8946-F8D23D279D1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.Implementations.StructureMap", "Extensions\Ellemy.CQRS.Implementations.StructureMap\Ellemy.CQRS.Implementations.StructureMap.csproj", "{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573} = {61555DCB-BB59-47E8-8946-F8D23D279D1A}
 	EndGlobalSection
 EndGlobal

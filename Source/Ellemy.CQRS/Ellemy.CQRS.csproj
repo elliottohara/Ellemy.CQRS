@@ -40,7 +40,8 @@
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\ICommandExecutor.cs" />
     <Compile Include="Command\ICommandExecutorFactory.cs" />
-    <Compile Include="Configure.cs" />
+    <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\Configure.cs" />
     <Compile Include="Event\DomainEvents.cs" />
     <Compile Include="Event\IDomainEvent.cs" />
     <Compile Include="Event\IDomainEventHandler.cs" />

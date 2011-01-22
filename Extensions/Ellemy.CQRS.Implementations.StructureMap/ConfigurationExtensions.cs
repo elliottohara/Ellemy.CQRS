@@ -1,5 +1,6 @@
 using System;
 using Ellemy.CQRS.Command;
+using Ellemy.CQRS.Config;
 using Ellemy.CQRS.Event;
 using StructureMap;
 

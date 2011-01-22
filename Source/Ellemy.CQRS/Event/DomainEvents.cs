@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ellemy.CQRS.Config;
 
 namespace Ellemy.CQRS.Event
 {

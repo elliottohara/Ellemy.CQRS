@@ -1,20 +1,8 @@
-using System;
-using Ellemy.CQRS.Command;
+﻿using Ellemy.CQRS.Command;
 using Ellemy.CQRS.Event;
 
-namespace Ellemy.CQRS
+namespace Ellemy.CQRS.Config
 {
-    public static class Configure
-    {
-        private static Configuration _currentConfig;
-        internal static Configuration CurrentConfig{get { return _currentConfig ?? (_currentConfig = new Configuration()); }
-        }
-        public static Configuration With()
-        {
-            return _currentConfig;
-        }
-        
-    }
     public class Configuration
     {
         public Configuration HandlerFactoryOf(IHandlerFactory handlerFactory)

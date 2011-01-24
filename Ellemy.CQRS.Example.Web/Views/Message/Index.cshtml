@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Ellemy.CQRS.Example.Query.MessageReadModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.ActionLink("Create a New Message", "Create")
+<ul>
+@foreach (var item in Model)
+{
+   <li>@Html.DisplayFor(m => item.Text)</li>
+}
+</ul>

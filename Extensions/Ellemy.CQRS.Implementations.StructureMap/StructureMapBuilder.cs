@@ -23,5 +23,6 @@ namespace Ellemy.CQRS.Implementations.StructureMap
         {
             return _container.GetInstance<ICommandExecutor<TCommand>>();
         }
+        
     }
 }

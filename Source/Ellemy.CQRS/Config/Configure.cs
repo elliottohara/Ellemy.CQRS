@@ -7,7 +7,7 @@ namespace Ellemy.CQRS.Config
         }
         public static Configuration With()
         {
-            return _currentConfig;
+            return CurrentConfig;
         }
         
     }

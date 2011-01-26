@@ -38,13 +38,14 @@
   <ItemGroup>
     <Compile Include="Command\CommandDispatcher.cs" />
     <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Command\ICommandExecutor.cs" />
-    <Compile Include="Command\ICommandExecutorFactory.cs" />
+    <Compile Include="Command\ICommandHandler.cs" />
+    <Compile Include="Command\ICommandHandlerFactory.cs" />
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\Configure.cs" />
     <Compile Include="Event\DomainEvents.cs" />
     <Compile Include="Event\IDomainEvent.cs" />
     <Compile Include="Event\IDomainEventHandler.cs" />
+    <Compile Include="Event\IEventPublisher.cs" />
     <Compile Include="Event\IHandlerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

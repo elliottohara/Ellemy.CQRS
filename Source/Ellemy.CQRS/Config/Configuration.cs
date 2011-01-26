@@ -10,13 +10,13 @@ namespace Ellemy.CQRS.Config
             HandlerFactory = handlerFactory;
             return this;
         }
-        public Configuration CommandExecutorFactoryOf(ICommandExecutorFactory commandExecutorFactory)
+        public Configuration CommandExecutorFactoryOf(ICommandHandlerFactory commandHandlerFactory)
         {
-            CommandExecutorFactory = commandExecutorFactory;
+            CommandHandlerFactory = commandHandlerFactory;
             return this;
         }
 
-        internal ICommandExecutorFactory CommandExecutorFactory { get; private set; }
+        internal ICommandHandlerFactory CommandHandlerFactory { get; private set; }
 
         internal IHandlerFactory HandlerFactory { get; private set; }
     }

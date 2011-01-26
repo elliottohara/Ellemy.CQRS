@@ -4,7 +4,7 @@ using Ellemy.CQRS.Example.Query;
 
 namespace Ellemy.CQRS.Example.Commands
 {
-    public class CreateMessageHandler : ICommandExecutor<CreateMessage>
+    public class CreateMessageHandler : ICommandHandler<CreateMessage>
     {
         private readonly IRepository<MessageReadModel> _repository;
 

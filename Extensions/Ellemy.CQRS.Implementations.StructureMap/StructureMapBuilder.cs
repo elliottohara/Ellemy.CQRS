@@ -5,7 +5,7 @@ using StructureMap;
 
 namespace Ellemy.CQRS.Implementations.StructureMap
 {
-    public class StructureMapBuilder : IHandlerFactory, ICommandExecutorFactory
+    public class StructureMapBuilder : IHandlerFactory, ICommandHandlerFactory
     {
         private readonly IContainer _container;
 
@@ -19,9 +19,9 @@ namespace Ellemy.CQRS.Implementations.StructureMap
             return _container.GetAllInstances<IDomainEventHandler<TEvent>>();
         }
 
-        public ICommandExecutor<TCommand> GetExecutorFor<TCommand>() where TCommand : ICommand
+        public ICommandHandler<TCommand> GetExecutorFor<TCommand>() where TCommand : ICommand
         {
-            return _container.GetInstance<ICommandExecutor<TCommand>>();
+            return _container.GetInstance<ICommandHandler<TCommand>>();
         }
         
     }

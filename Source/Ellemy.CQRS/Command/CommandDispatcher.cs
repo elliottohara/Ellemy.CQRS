@@ -1,16 +1,18 @@
 using Ellemy.CQRS.Config;
+using Ellemy.CQRS.Event;
 
 namespace Ellemy.CQRS.Command
 {
     public static class CommandDispatcher
     {
-        public static ICommandExecutorFactory CommandExecutorFactory
+        public static ICommandHandlerFactory CommandHandlerFactory
         {
-            get { return Configure.CurrentConfig.CommandExecutorFactory; }
+            get { return Configure.CurrentConfig.CommandHandlerFactory; }
         }
         public static void Dispatch<TCommand>(TCommand command) where TCommand:ICommand
         {
-            CommandExecutorFactory.GetExecutorFor<TCommand>().Execute(command);
+            CommandHandlerFactory.GetExecutorFor<TCommand>().Execute(command);
+            DomainEvents.Publish();
         }
     }
 }

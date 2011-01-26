@@ -9,9 +9,16 @@ namespace Ellemy.CQRS.Event
         [ThreadStatic] //so that each thread has its own callbacks
         private static List<Delegate> actions;
 
-        public static IHandlerFactory Container { get { return Configure.CurrentConfig.HandlerFactory; } } //as before
-        
+        [ThreadStatic] 
+        private static List<Action> handlerActions;
 
+        public static IHandlerFactory Container { get { return Configure.CurrentConfig.HandlerFactory; } } 
+        
+        public static void Publish()
+        {
+            handlerActions.ForEach(a => a()); 
+            //TODO We wanna start publishing to remote systems here 
+        }
         //Registers a callback for the given domain event
         public static void Register<T>(Action<T> callback) where T : IDomainEvent
         {
@@ -30,9 +37,17 @@ namespace Ellemy.CQRS.Event
         //Raises the given domain event
         public static void Raise<T>(T args) where T : IDomainEvent
         {
+            
             if (Container != null)
+            {
+                if(handlerActions == null)
+                    handlerActions = new List<Action>();
                 foreach (var handler in Container.GetHandlersFor<T>())
-                    handler.Handle(args);
+                {
+                    var handler1 = handler;
+                    handlerActions.Add(() => handler1.Handle(args));
+                }
+            }
 
             if (actions != null)
                 foreach (Delegate action in actions)

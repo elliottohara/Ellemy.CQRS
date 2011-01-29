@@ -1,4 +1,3 @@
-using System;
 using Ellemy.CQRS.Command;
 using Ellemy.CQRS.Config;
 using Ellemy.CQRS.Event;
@@ -26,8 +25,7 @@ namespace Ellemy.CQRS.Implementations.StructureMap
             _container.Configure(c=> c.Scan(scanner=>
                                                 {
                                                     scanner.AssemblyContainingType<THandler>();
-                                                    scanner.ConnectImplementationsToTypesClosing(
-                                                        typeof (IDomainEventHandler<>));
+                                                    scanner.AddAllTypesOf(typeof(IDomainEventHandler<>));
                                                 }));
             return config;
         }

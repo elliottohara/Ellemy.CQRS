@@ -4,6 +4,7 @@ using Ellemy.CQRS.Command;
 using Ellemy.CQRS.Example.Commands;
 using Ellemy.CQRS.Example.Query;
 using Ellemy.CQRS.Example.Web.Infrastructure;
+using Ellemy.Mvc;
 
 namespace Ellemy.CQRS.Example.Web.Controllers
 {
@@ -19,7 +20,7 @@ namespace Ellemy.CQRS.Example.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(_repository.GetAll());
+            return this.Query<AllMessages>();
         }
         [HttpGet]
         public ActionResult Create()
@@ -32,6 +33,12 @@ namespace Ellemy.CQRS.Example.Web.Controllers
             CommandDispatcher.Dispatch(new CreateMessage(Guid.NewGuid(), text));
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult TestCreate(string text)
+        {
+            return this.Command(new CreateMessage(Guid.NewGuid(), text), () => RedirectToAction("Index"));
+        }
+
 
 
     }

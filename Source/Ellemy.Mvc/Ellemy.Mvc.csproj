@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{77B35B1C-85E4-419E-A36B-C5652F830A9B}</ProjectGuid>
+    <ProjectGuid>{639748A0-F957-4A32-BA84-17606FDCC58A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ellemy.CQRS.Example</RootNamespace>
-    <AssemblyName>Ellemy.CQRS.Example</AssemblyName>
+    <RootNamespace>Ellemy.Mvc</RootNamespace>
+    <AssemblyName>Ellemy.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\packages\structuremap.2.6.1.0\lib\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,22 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CreateMessage.cs" />
-    <Compile Include="Commands\CreateMessageHandler.cs" />
-    <Compile Include="Domain\ Message.cs" />
-    <Compile Include="Events\MessageTextChanged.cs" />
-    <Compile Include="Events\MessageCreated.cs" />
+    <Compile Include="ControllerExtensions.cs" />
+    <Compile Include="MvcController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\AllMessages.cs" />
-    <Compile Include="Query\IRepository.cs" />
-    <Compile Include="Query\MessageReadModel.cs" />
-    <Compile Include="Query\MessageReadModelWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
+    <ProjectReference Include="..\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>
       <Name>Ellemy.CQRS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

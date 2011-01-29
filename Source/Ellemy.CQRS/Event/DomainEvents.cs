@@ -16,6 +16,7 @@ namespace Ellemy.CQRS.Event
         
         public static void Publish()
         {
+            if (handlerActions == null) return;
             handlerActions.ForEach(a => a()); 
             //TODO We wanna start publishing to remote systems here 
         }
@@ -37,11 +38,11 @@ namespace Ellemy.CQRS.Event
         //Raises the given domain event
         public static void Raise<T>(T args) where T : IDomainEvent
         {
-            
+            if (handlerActions == null)
+                handlerActions = new List<Action>();
             if (Container != null)
             {
-                if(handlerActions == null)
-                    handlerActions = new List<Action>();
+               
                 foreach (var handler in Container.GetHandlersFor<T>())
                 {
                     var handler1 = handler;

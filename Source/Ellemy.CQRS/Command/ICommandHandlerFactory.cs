@@ -2,6 +2,6 @@ namespace Ellemy.CQRS.Command
 {
     public interface ICommandHandlerFactory
     {
-        ICommandHandler<TCommand> GetExecutorFor<TCommand>() where TCommand : ICommand;
+        ICommandHandler<TCommand> GetHandlerFor<TCommand>() where TCommand : ICommand;
     }
 }

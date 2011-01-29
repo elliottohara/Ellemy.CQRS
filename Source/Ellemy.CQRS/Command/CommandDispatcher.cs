@@ -11,7 +11,7 @@ namespace Ellemy.CQRS.Command
         }
         public static void Dispatch<TCommand>(TCommand command) where TCommand:ICommand
         {
-            CommandHandlerFactory.GetExecutorFor<TCommand>().Execute(command);
+            CommandHandlerFactory.GetHandlerFor<TCommand>().Execute(command);
             DomainEvents.Publish();
         }
     }

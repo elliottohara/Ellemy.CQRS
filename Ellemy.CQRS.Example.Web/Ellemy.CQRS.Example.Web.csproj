@@ -130,6 +130,10 @@
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>
       <Name>Ellemy.CQRS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Source\Ellemy.Mvc\Ellemy.Mvc.csproj">
+      <Project>{639748A0-F957-4A32-BA84-17606FDCC58A}</Project>
+      <Name>Ellemy.Mvc</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Message\Index.cshtml" />

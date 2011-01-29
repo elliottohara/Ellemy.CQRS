@@ -8,10 +8,10 @@ namespace Ellemy.CQRS.Example.Commands
         public Guid MessageId { get; set; }
         public string Text { get; set; }
 
-        public CreateMessage(Guid messageId, string Text)
+        public CreateMessage(Guid messageId, string text)
         {
             MessageId = messageId;
-            this.Text = Text;
+            Text = text;
         }
     }
 }

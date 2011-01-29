@@ -19,7 +19,7 @@ namespace Ellemy.CQRS.Implementations.StructureMap
             return _container.GetAllInstances<IDomainEventHandler<TEvent>>();
         }
 
-        public ICommandHandler<TCommand> GetExecutorFor<TCommand>() where TCommand : ICommand
+        public ICommandHandler<TCommand> GetHandlerFor<TCommand>() where TCommand : ICommand
         {
             return _container.GetInstance<ICommandHandler<TCommand>>();
         }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Ellemy.CQRS.Config;
 using Ellemy.CQRS.Example.Commands;
 using Ellemy.CQRS.Example.Query;
 using Ellemy.CQRS.Example.Web.Infrastructure;
 using Ellemy.CQRS.Implementations.StructureMap;
+using NServiceBusPublisher;
 using StructureMap;
+using NServiceBus;
+using Configure = Ellemy.CQRS.Config.Configure;
 
 namespace Ellemy.CQRS.Example.Web
 {
@@ -45,10 +44,23 @@ namespace Ellemy.CQRS.Example.Web
                                         {
                                             c.For(typeof (IRepository<>)).Use(typeof(InMemoryCacheRepository<>));
                                         });
+            
+            NServiceBus.Configure.WithWeb() //for web apps this should be WithWeb()
+                .StructureMapBuilder()
+                .XmlSerializer()
+                .MsmqTransport()
+                .MsmqSubscriptionStorage()
+                .UnicastBus()
+                .LoadMessageHandlers()
+                .CreateBus()
+                .Start();
+           
             Configure.With()
                 .StructureMapBuilder(ObjectFactory.Container)
                 .CommandExecutorsAreInAssemblyContainingType<CreateMessage>()
-                .HandlersAreInAssemblyContainingType<MessageReadModel>();
+                .HandlersAreInAssemblyContainingType<MessageReadModel>()
+                .NServiceBusPublisher(ObjectFactory.Container.GetInstance<IBus>());
+
 
         }
     }

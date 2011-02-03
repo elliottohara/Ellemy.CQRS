@@ -12,9 +12,10 @@ namespace NServiceBusPublisher
             _bus = bus;
         }
 
-        public void Publish<TDomainEvent>(TDomainEvent @event)
+        public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent:IDomainEvent
         {
-            _bus.Publish(new DomainEventMessage<TDomainEvent>(@event));
+            var message = new DomainEventMessageThatWorks<TDomainEvent>(@event);
+            _bus.Send(message);
         }
 
        

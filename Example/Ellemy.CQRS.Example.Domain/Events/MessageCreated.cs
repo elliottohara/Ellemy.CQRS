@@ -3,6 +3,7 @@ using Ellemy.CQRS.Event;
 
 namespace Ellemy.CQRS.Example.Events
 {
+    [Serializable]
     public class MessageCreated : IDomainEvent
     {
         public Guid MessageId { get; set; }

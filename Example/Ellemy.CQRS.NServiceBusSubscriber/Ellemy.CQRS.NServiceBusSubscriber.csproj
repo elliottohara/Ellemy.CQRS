@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}</ProjectGuid>
+    <ProjectGuid>{3769EEB5-3F24-4126-A0E4-D3530159D56D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ellemy.CQRS.Implementations.StructureMap</RootNamespace>
-    <AssemblyName>Ellemy.CQRS.Implementations.StructureMap</AssemblyName>
+    <RootNamespace>Ellemy.CQRS.NServiceBusSubscriber</RootNamespace>
+    <AssemblyName>Ellemy.CQRS.NServiceBusSubscriber</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StructureMap, Version=2.6.1.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Host">
+      <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\NServiceBus.Host.exe</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.StructureMap262">
+      <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\containers\structuremap262\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
       <HintPath>..\..\packages\nservicebus.2.5.0.1446\lib\net40\containers\structuremap262\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -40,24 +54,29 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationExtensions.cs" />
+    <Compile Include="EndpointConfig.cs" />
+    <Compile Include="MessageHandler.cs" />
+    <Compile Include="PrintStuffToConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StructureMapBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\Extensions\NServiceBusPublisher\NServiceBusPublisher.csproj">
+      <Project>{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}</Project>
+      <Name>NServiceBusPublisher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>
       <Name>Ellemy.CQRS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ellemy.CQRS.Example.Domain\Ellemy.CQRS.Example.csproj">
+      <Project>{77B35B1C-85E4-419E-A36B-C5652F830A9B}</Project>
+      <Name>Ellemy.CQRS.Example</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if not exist  $(SolutionDir)\binaries\extensions\$(ProjectName) mkdir $(SolutionDir)\binaries\extensions\$(ProjectName)
-copy $(TargetDir)*   $(SolutionDir)\binaries\extensions\$(ProjectName)</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

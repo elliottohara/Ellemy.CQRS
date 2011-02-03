@@ -33,8 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\nservicebus.2.5.0.1446\lib\net40\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus">
+      <HintPath>..\packages\nservicebus.2.5.0.1446\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\nservicebus.2.5.0.1446\lib\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.StructureMap262">
+      <HintPath>..\packages\nservicebus.2.5.0.1446\lib\net40\containers\structuremap262\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.1.0\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\nservicebus.2.5.0.1446\lib\net40\containers\structuremap262\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
@@ -125,6 +137,10 @@
     <ProjectReference Include="..\Extensions\Ellemy.CQRS.Implementations.StructureMap\Ellemy.CQRS.Implementations.StructureMap.csproj">
       <Project>{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}</Project>
       <Name>Ellemy.CQRS.Implementations.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\NServiceBusPublisher\NServiceBusPublisher.csproj">
+      <Project>{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}</Project>
+      <Name>NServiceBusPublisher</Name>
     </ProjectReference>
     <ProjectReference Include="..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>

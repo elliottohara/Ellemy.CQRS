@@ -5,6 +5,10 @@ namespace Ellemy.CQRS.Config
 {
     public class Configuration
     {
+        public Configuration()
+        {
+            EventPublisher = new NoOpPublisher();
+        }
         public Configuration HandlerFactoryOf(IHandlerFactory handlerFactory)
         {
             HandlerFactory = handlerFactory;
@@ -15,9 +19,13 @@ namespace Ellemy.CQRS.Config
             CommandHandlerFactory = commandHandlerFactory;
             return this;
         }
-
+        public Configuration PublishEventsWith(IEventPublisher publisher)
+        {
+            EventPublisher = publisher;
+            return this;
+        }
         internal ICommandHandlerFactory CommandHandlerFactory { get; private set; }
-
         internal IHandlerFactory HandlerFactory { get; private set; }
+        internal IEventPublisher EventPublisher { get; private set; }
     }
 }

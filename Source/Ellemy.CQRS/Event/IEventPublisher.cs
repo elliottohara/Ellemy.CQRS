@@ -2,6 +2,6 @@ namespace Ellemy.CQRS.Event
 {
     public interface IEventPublisher
     {
-        void Publish();
+        void Publish<TDomainEvent>(TDomainEvent @event);
     }
 }

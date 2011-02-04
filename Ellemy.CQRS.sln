@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.UnitTests", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.Mvc", "Source\Ellemy.Mvc\Ellemy.Mvc.csproj", "{639748A0-F957-4A32-BA84-17606FDCC58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusPublisher", "Extensions\NServiceBusPublisher\NServiceBusPublisher.csproj", "{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.Publishing.NServiceBus", "Extensions\NServiceBusPublisher\Ellemy.CQRS.Publishing.NServiceBus.csproj", "{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.NServiceBusSubscriber", "Example\Ellemy.CQRS.NServiceBusSubscriber\Ellemy.CQRS.NServiceBusSubscriber.csproj", "{3769EEB5-3F24-4126-A0E4-D3530159D56D}"
 EndProject

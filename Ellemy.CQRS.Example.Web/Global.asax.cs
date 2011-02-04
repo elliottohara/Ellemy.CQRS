@@ -5,7 +5,7 @@ using Ellemy.CQRS.Example.Commands;
 using Ellemy.CQRS.Example.Query;
 using Ellemy.CQRS.Example.Web.Infrastructure;
 using Ellemy.CQRS.Implementations.StructureMap;
-using NServiceBusPublisher;
+using Ellemy.CQRS.Publishing.NServiceBus;
 using StructureMap;
 using NServiceBus;
 using Configure = Ellemy.CQRS.Config.Configure;

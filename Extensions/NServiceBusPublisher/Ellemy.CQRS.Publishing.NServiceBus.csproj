@@ -8,8 +8,8 @@
     <ProjectGuid>{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBusPublisher</RootNamespace>
-    <AssemblyName>NServiceBusPublisher</AssemblyName>
+    <RootNamespace>Ellemy.CQRS.Publishing.NServiceBus</RootNamespace>
+    <AssemblyName>Ellemy.CQRS.Publishing.NServiceBus</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationExtensions.cs" />
     <Compile Include="DomainEventMessage.cs" />
+    <Compile Include="MessageHandler.cs" />
     <Compile Include="NServiceBusPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

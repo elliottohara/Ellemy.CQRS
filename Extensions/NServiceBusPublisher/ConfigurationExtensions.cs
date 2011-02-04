@@ -1,7 +1,7 @@
 using Ellemy.CQRS.Config;
 using NServiceBus;
 
-namespace NServiceBusPublisher
+namespace Ellemy.CQRS.Publishing.NServiceBus
 {
     public static class ConfigurationExtensions
     {

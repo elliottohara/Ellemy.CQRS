@@ -1,11 +1,8 @@
-using System;
 using Ellemy.CQRS.Event;
 using NServiceBus;
-using NServiceBusPublisher;
-using NServiceBusPublisher.Stuff;
-using StructureMap;
+using NServiceBus.ObjectBuilder.Common;
 
-namespace Ellemy.CQRS.NServiceBusSubscriber
+namespace Ellemy.CQRS.Publishing.NServiceBus
 {
     public class MessageHandler: IHandleMessages<EventMessage<IDomainEvent>>
     {
@@ -20,7 +17,7 @@ namespace Ellemy.CQRS.NServiceBusSubscriber
         public void Handle(EventMessage<IDomainEvent> message)
         {
             var handlerInterface = typeof(IDomainEventHandler<>).MakeGenericType(message.Payload.GetType());
-            foreach (var handler in _container.GetAllInstances(handlerInterface))
+            foreach (var handler in _container.BuildAll(handlerInterface))
             {
                 var handlerMethod = handler.GetType().GetMethod("Handle");
                 handlerMethod.Invoke(handler, new object[] { message.Payload });

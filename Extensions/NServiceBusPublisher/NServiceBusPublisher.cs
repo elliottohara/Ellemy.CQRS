@@ -1,8 +1,7 @@
 using Ellemy.CQRS.Event;
 using NServiceBus;
-using NServiceBusPublisher.Stuff;
 
-namespace NServiceBusPublisher
+namespace Ellemy.CQRS.Publishing.NServiceBus
 {
     public class NServiceBusPublisher : IEventPublisher
     {

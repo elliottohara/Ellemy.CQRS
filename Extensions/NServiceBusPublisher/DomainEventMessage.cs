@@ -2,7 +2,7 @@ using System;
 using Ellemy.CQRS.Event;
 using NServiceBus;
 
-namespace NServiceBusPublisher.Stuff
+namespace Ellemy.CQRS.Publishing.NServiceBus
 {
     [Serializable]
     public class EventMessage<T> : IMessage

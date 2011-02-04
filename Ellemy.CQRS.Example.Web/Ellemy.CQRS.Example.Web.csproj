@@ -138,9 +138,9 @@
       <Project>{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}</Project>
       <Name>Ellemy.CQRS.Implementations.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Extensions\NServiceBusPublisher\NServiceBusPublisher.csproj">
+    <ProjectReference Include="..\Extensions\NServiceBusPublisher\Ellemy.CQRS.Publishing.NServiceBus.csproj">
       <Project>{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}</Project>
-      <Name>NServiceBusPublisher</Name>
+      <Name>Ellemy.CQRS.Publishing.NServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>

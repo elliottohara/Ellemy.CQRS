@@ -2,28 +2,21 @@ using System;
 using Ellemy.CQRS.Event;
 using NServiceBus;
 
-namespace NServiceBusPublisher
+namespace NServiceBusPublisher.Stuff
 {
     [Serializable]
-    public class DomainEventMessage: IMessage
+    public class EventMessage<T> : IMessage
+       where T : IDomainEvent
     {
-        public IDomainEvent Event { get; set; }
-        public Type MessageType { get; set; }
-
-        public DomainEventMessage(IDomainEvent @event)
+        public EventMessage(T @event)
         {
-            Event = @event;
-            MessageType = @event.GetType();
+            Payload = @event;
         }
+        public EventMessage(){}
+        /// <summary>
+        /// Gets or sets transported event.
+        /// </summary>
+        public T Payload { get; set; }
     }
-    [Serializable]
-    public class DomainEventMessageThatWorks<TDomainEvent>:DomainEventMessage where TDomainEvent:IDomainEvent
-    {
-        public TDomainEvent EventCastProperly { get; set; }
-        public DomainEventMessageThatWorks(IDomainEvent @event) : base(@event)
-        {
-            Event = (TDomainEvent) @event;
-            EventCastProperly = (TDomainEvent)@event;
-        }
-    }
+    
 }

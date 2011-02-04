@@ -1,5 +1,6 @@
 using Ellemy.CQRS.Event;
 using NServiceBus;
+using NServiceBusPublisher.Stuff;
 
 namespace NServiceBusPublisher
 {
@@ -14,7 +15,7 @@ namespace NServiceBusPublisher
 
         public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent:IDomainEvent
         {
-            var message = new DomainEventMessageThatWorks<TDomainEvent>(@event);
+            var message = new EventMessage<TDomainEvent>(@event);
             _bus.Send(message);
         }
 

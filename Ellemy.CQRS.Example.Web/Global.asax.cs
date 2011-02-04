@@ -29,7 +29,7 @@ namespace Ellemy.CQRS.Example.Web
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Message", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
@@ -47,7 +47,7 @@ namespace Ellemy.CQRS.Example.Web
             
             NServiceBus.Configure.WithWeb() //for web apps this should be WithWeb()
                 .StructureMapBuilder()
-                .XmlSerializer()
+                .BinarySerializer()
                 .MsmqTransport()
                 .MsmqSubscriptionStorage()
                 .UnicastBus()

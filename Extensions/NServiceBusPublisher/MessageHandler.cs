@@ -12,8 +12,6 @@ namespace Ellemy.CQRS.Publishing.NServiceBus
         {
             _container = container;
         }
-
-       
         public void Handle(EventMessage<IDomainEvent> message)
         {
             var handlerInterface = typeof(IDomainEventHandler<>).MakeGenericType(message.Payload.GetType());

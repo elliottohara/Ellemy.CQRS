@@ -5,6 +5,7 @@ using Ellemy.CQRS.Example.Commands;
 using Ellemy.CQRS.Example.Query;
 using Ellemy.CQRS.Example.Web.Infrastructure;
 using Ellemy.CQRS.Implementations.StructureMap;
+using Ellemy.CQRS.Publishing.AmazonSns;
 using Ellemy.CQRS.Publishing.NServiceBus;
 using StructureMap;
 using NServiceBus;
@@ -58,8 +59,9 @@ namespace Ellemy.CQRS.Example.Web
             Configure.With()
                 .StructureMapBuilder(ObjectFactory.Container)
                 .CommandExecutorsAreInAssemblyContainingType<CreateMessage>()
-                .HandlersAreInAssemblyContainingType<MessageReadModel>()
-                .NServiceBusPublisher(ObjectFactory.Container.GetInstance<IBus>());
+                .HandlersAreInAssemblyContainingType<MessageReadModel>().
+                //.NServiceBusPublisher(ObjectFactory.Container.GetInstance<IBus>());
+                AmazonSns();
 
 
         }

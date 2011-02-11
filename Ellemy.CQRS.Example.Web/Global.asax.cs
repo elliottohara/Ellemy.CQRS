@@ -55,13 +55,16 @@ namespace Ellemy.CQRS.Example.Web
                 .LoadMessageHandlers()
                 .CreateBus()
                 .Start();
-           
+
             Configure.With()
                 .StructureMapBuilder(ObjectFactory.Container)
                 .CommandExecutorsAreInAssemblyContainingType<CreateMessage>()
-                .HandlersAreInAssemblyContainingType<MessageReadModel>().
-                //.NServiceBusPublisher(ObjectFactory.Container.GetInstance<IBus>());
-                AmazonSns();
+                .HandlersAreInAssemblyContainingType<MessageReadModel>()
+                .AmazonPublisher()
+                    .AwsAccessKeyId("AKIAIN2KJH4QJIUV7CGQ")
+                    .AwsSecretKey("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")
+                    .TopicArn("arn:aws:sns:us-east-1:451419498740:EventMessage")
+                    .CreatePublisher();
 
 
         }

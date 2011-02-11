@@ -1,42 +1,80 @@
+using System;
 using System.Web.Script.Serialization;
+using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Ellemy.CQRS.Config;
 using Ellemy.CQRS.Event;
 
 namespace Ellemy.CQRS.Publishing.AmazonSns
 {
-    public class IAmazonSnsSettings
+    public static class AmazonConfigurationExtensions
     {
-        public string TopicArn { get { return "arn:aws:sns:us-east-1:451419498740:EventMessage"; } }
-        public string AWSAccessKeyId { get { return "AKIAIN2KJH4QJIUV7CGQ"; } }
-        public string AmazonUrl { get { return "https://sns.us-east-1.amazonaws.com/"; } }
-        public string Secret { get { return "YeahRIGHT"; } }
-    }
-    public class AmazonPublisher : IEventPublisher 
-    {
-        private readonly IAmazonSnsSettings _settings;
-        
-        public AmazonPublisher(IAmazonSnsSettings settings)
+        public static AmazonPublisherConfig AmazonPublisher(this Configuration configuration)
         {
-            _settings = settings;
+            return new AmazonPublisherConfig(configuration);
+        }
+    }
+
+    public class AmazonPublisherConfig
+    {
+        private readonly Configuration _configuration;
+
+        public AmazonPublisherConfig(Configuration configuration)
+        {
+            _configuration = configuration;
         }
 
-        public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent : IDomainEvent
+
+        internal string AccessKeyId { get; private set; }
+        internal string SecretKey { get; private set; }
+        internal string TopicAccessResourceName { get; private set; }
+
+        public AmazonPublisherConfig AwsAccessKeyId(string accessKeyId)
         {
-              //WebRequest.Create()
-            var serializer = new JavaScriptSerializer();
-            var payload = serializer.Serialize(@event);
-            var x = new Amazon.SimpleNotificationService.AmazonSimpleNotificationServiceClient(_settings.AWSAccessKeyId,_settings.Secret);
-            x.Publish(new PublishRequest
-                          {Message = payload, Subject = @event.GetType().Name, TopicArn = _settings.TopicArn});
+            AccessKeyId = accessKeyId;
+            return this;
+        }
+
+        public AmazonPublisherConfig AwsSecretKey(string awsSecretKey)
+        {
+            SecretKey = awsSecretKey;
+            return this;
+        }
+
+        public AmazonPublisherConfig TopicArn(string value)
+        {
+            TopicAccessResourceName = value;
+            return this;
+        }
+        public Configuration CreatePublisher()
+        {
+            _configuration.PublishEventsWith(new AmazonPublisher(this));
+            return _configuration;
         }
     }
-    public static class ConfigurationExtensions
+
+    public class AmazonPublisher : IEventPublisher
     {
-        public static Configuration AmazonSns(this Configuration config)
+        private AmazonSimpleNotificationServiceClient _client;
+        private string _topicArn;
+
+        internal AmazonPublisher(AmazonPublisherConfig config)
         {
-            config.PublishEventsWith(new AmazonPublisher(new IAmazonSnsSettings()));
-            return config;
+            _client = new AmazonSimpleNotificationServiceClient(config.AccessKeyId, config.SecretKey);
+            _topicArn = config.TopicAccessResourceName;
+        }
+       public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent : IDomainEvent
+        {
+            var serializer = new JavaScriptSerializer();
+            string payload = serializer.Serialize(@event);
+            
+            var request = new PublishRequest
+                              {
+                                  Message = payload,
+                                  Subject = @event.GetType().Name,
+                                  TopicArn = _topicArn
+                              };
+            _client.Publish(request);
         }
     }
 }

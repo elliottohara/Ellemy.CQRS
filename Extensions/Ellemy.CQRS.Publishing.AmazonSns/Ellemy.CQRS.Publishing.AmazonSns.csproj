@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="AWSSDK, Version=1.2.3.2, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\AWS SDK for .NET\bin\AWSSDK.dll</HintPath>
+      <HintPath>..\..\packages\Aws SDK for .Net\AWSSDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmazonConfigurationExtensions.cs" />
     <Compile Include="AmazonPublisher.cs" />
+    <Compile Include="AmazonPublisherConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

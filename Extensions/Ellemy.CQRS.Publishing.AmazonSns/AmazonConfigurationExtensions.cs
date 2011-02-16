@@ -4,9 +4,9 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
 {
     public static class AmazonConfigurationExtensions
     {
-        public static AmazonPublisherConfig AmazonPublisher(this Configuration configuration)
+        public static AmazonConfig AmazonPublisher(this Configuration configuration)
         {
-            return new AmazonPublisherConfig(configuration);
+            return new AmazonConfig(configuration);
         }
     }
 }

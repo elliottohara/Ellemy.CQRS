@@ -11,9 +11,10 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         private readonly AmazonSimpleNotificationServiceClient _client;
         private readonly string _topicArn;
 
-        internal AmazonPublisher(AmazonPublisherConfig config)
+        internal AmazonPublisher(AmazonConfig config)
         {
             _client = new AmazonSimpleNotificationServiceClient(config.AccessKeyId, config.SecretKey);
+            
             _topicArn = config.TopicAccessResourceName;
         }
        public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent : IDomainEvent
@@ -28,6 +29,7 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
                                   TopicArn = _topicArn
                               };
             _client.Publish(request);
+           
         }
     }
 }

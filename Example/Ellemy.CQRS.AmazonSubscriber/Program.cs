@@ -17,7 +17,7 @@ namespace Ellemy.CQRS.AmazonSubscriber
             config.CreatePublisher();
 
             var subscriber = new AmazonSqsSubscriber(config);
-            subscriber.Run();
+            subscriber.Start();
 
 
         }

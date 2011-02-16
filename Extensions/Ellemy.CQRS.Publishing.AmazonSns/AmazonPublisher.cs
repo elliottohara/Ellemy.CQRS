@@ -25,7 +25,7 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
             var request = new PublishRequest
                               {
                                   Message = payload,
-                                  Subject = @event.GetType().Name,
+                                  Subject = @event.GetType().FullName,
                                   TopicArn = _topicArn
                               };
             _client.Publish(request);

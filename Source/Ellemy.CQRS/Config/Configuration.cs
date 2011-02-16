@@ -1,4 +1,5 @@
 ﻿using Ellemy.CQRS.Command;
+using Ellemy.CQRS.Container;
 using Ellemy.CQRS.Event;
 
 namespace Ellemy.CQRS.Config
@@ -24,8 +25,14 @@ namespace Ellemy.CQRS.Config
             EventPublisher = publisher;
             return this;
         }
-        internal ICommandHandlerFactory CommandHandlerFactory { get; private set; }
-        internal IHandlerFactory HandlerFactory { get; private set; }
-        internal IEventPublisher EventPublisher { get; private set; }
+        public Configuration  WithObjectBuilder(IObjectBuilder builder)
+        {
+            ObjectBuilder = builder;
+            return this;
+        }
+        public ICommandHandlerFactory CommandHandlerFactory { get; private set; }
+        public IHandlerFactory HandlerFactory { get; private set; }
+        public IEventPublisher EventPublisher { get; private set; }
+        public IObjectBuilder ObjectBuilder { get; private set; }
     }
 }

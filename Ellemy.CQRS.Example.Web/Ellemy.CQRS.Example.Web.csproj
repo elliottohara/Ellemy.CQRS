@@ -142,10 +142,6 @@
       <Project>{A44A393D-6E84-432B-9CA0-2F0211B74BFA}</Project>
       <Name>Ellemy.CQRS.Publishing.AmazonSns</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Extensions\NServiceBusPublisher\Ellemy.CQRS.Publishing.NServiceBus.csproj">
-      <Project>{5BD50EB3-F1B3-48D7-BA97-86750AFF84D9}</Project>
-      <Name>Ellemy.CQRS.Publishing.NServiceBus</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>
       <Name>Ellemy.CQRS</Name>

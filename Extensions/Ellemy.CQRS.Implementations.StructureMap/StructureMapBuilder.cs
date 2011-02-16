@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ellemy.CQRS.Command;
+using Ellemy.CQRS.Container;
 using Ellemy.CQRS.Event;
 using StructureMap;
 
 namespace Ellemy.CQRS.Implementations.StructureMap
 {
-    public class StructureMapBuilder : IHandlerFactory, ICommandHandlerFactory
+    public class StructureMapBuilder : IHandlerFactory, ICommandHandlerFactory,IObjectBuilder
     {
         private readonly IContainer _container;
 
@@ -23,6 +26,15 @@ namespace Ellemy.CQRS.Implementations.StructureMap
         {
             return _container.GetInstance<ICommandHandler<TCommand>>();
         }
-        
+
+        public IEnumerable<object> BuildAll(Type type)
+        {
+            return _container.GetAllInstances(type).Cast<object>();
+        }
+
+        public IEnumerable<T> BuildAll<T>()
+        {
+            return _container.GetAllInstances<T>();
+        }
     }
 }

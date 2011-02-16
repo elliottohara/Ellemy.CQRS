@@ -18,7 +18,8 @@ namespace Ellemy.CQRS.Implementations.StructureMap
             var builder = new StructureMapBuilder(_container);
             return config
                 .CommandExecutorFactoryOf(builder)
-                .HandlerFactoryOf(builder);
+                .HandlerFactoryOf(builder)
+                .WithObjectBuilder(builder);
         }
         public static Configuration HandlersAreInAssemblyContainingType<THandler>(this Configuration config)
         {

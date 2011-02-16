@@ -42,6 +42,7 @@
     <Compile Include="Command\ICommandHandlerFactory.cs" />
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\Configure.cs" />
+    <Compile Include="Container\IObjectBuilder.cs" />
     <Compile Include="Event\DomainEvents.cs" />
     <Compile Include="Event\IDomainEvent.cs" />
     <Compile Include="Event\IDomainEventHandler.cs" />

@@ -1,14 +1,18 @@
-﻿using Ellemy.CQRS.Config;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Reflection;
+using Ellemy.CQRS.Config;
+using Ellemy.CQRS.Event;
 
 namespace Ellemy.CQRS.Publishing.AmazonSns
 {
     public class AmazonConfig
     {
-        private readonly Configuration _configuration;
+        internal readonly Configuration EllemyConfiguration;
 
-        public AmazonConfig(Configuration configuration)
+        public AmazonConfig(Configuration ellemyConfiguration)
         {
-            _configuration = configuration;
+            EllemyConfiguration = ellemyConfiguration;
         }
 
 
@@ -16,7 +20,9 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         internal string SecretKey { get; private set; }
         internal string TopicAccessResourceName { get; private set; }
         internal string SqsQueueName { get; private set; }
-        internal string SqsQueueUrl { get; set; }
+        internal ICollection<Assembly> EventAssemblies { get; private set; }
+        public string SqsQueueUrl { get; internal set; }
+        
         
         public AmazonConfig AwsAccessKeyId(string accessKeyId)
         {
@@ -42,8 +48,15 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         }
         public Configuration CreatePublisher()
         {
-            _configuration.PublishEventsWith(new AmazonPublisher(this));
-            return _configuration;
+            EllemyConfiguration.PublishEventsWith(new AmazonPublisher(this));
+            return EllemyConfiguration;
+        }
+        public AmazonConfig EventsAreInAssemblyContainingType<TEvent>()
+        {
+            if (EventAssemblies == null)
+                EventAssemblies = new List<Assembly>();
+            EventAssemblies.Add(typeof(TEvent).Assembly);
+            return this;
         }
     }
 }

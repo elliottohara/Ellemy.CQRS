@@ -46,15 +46,16 @@ namespace Ellemy.CQRS.Example.Web
                                             c.For(typeof (IRepository<>)).Use(typeof(InMemoryCacheRepository<>));
                                         });
             
-            NServiceBus.Configure.WithWeb() //for web apps this should be WithWeb()
-                .StructureMapBuilder()
-                .BinarySerializer()
-                .MsmqTransport()
-                .MsmqSubscriptionStorage()
-                .UnicastBus()
-                .LoadMessageHandlers()
-                .CreateBus()
-                .Start();
+            //We're using Amazon stuff now, no need to configure this.
+            //NServiceBus.Configure.WithWeb() //for web apps this should be WithWeb()
+            //    .StructureMapBuilder()
+            //    .BinarySerializer()
+            //    .MsmqTransport()
+            //    .MsmqSubscriptionStorage()
+            //    .UnicastBus()
+            //    .LoadMessageHandlers()
+            //    .CreateBus()
+            //    .Start();
 
             Configure.With()
                 .StructureMapBuilder(ObjectFactory.Container)

@@ -1,6 +1,7 @@
 using System;
-using System.Threading;
 using Amazon;
+using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Ellemy.CQRS.Config;
@@ -8,8 +9,6 @@ using Ellemy.CQRS.Event;
 using Ellemy.CQRS.Implementations.StructureMap;
 using Ellemy.CQRS.Publishing.AmazonSns;
 using NUnit.Framework;
-using StructureMap;
-using SendMessageRequest = Amazon.SQS.Model.SendMessageRequest;
 
 namespace AmazonTests
 {
@@ -23,12 +22,13 @@ namespace AmazonTests
         private const string topicArn = "arn:aws:sns:us-east-1:451419498740:EventMessage";
         private string tempQueueName;
         private AmazonPublisher _publisher;
+        private AmazonSimpleNotificationService _snsClient;
 
         [SetUp]
         public void Arrange()
         {
 
-            tempQueueName = "Test_QUEUE";
+            tempQueueName = "Test_QUEUE_1";
             _config = Configure.With()
                 .StructureMapBuilder()
                 .HandlersAreInAssemblyContainingType<TestEvent>()
@@ -44,25 +44,47 @@ namespace AmazonTests
             _publisher = new AmazonPublisher(_config);
 
             _amazonClient = AWSClientFactory.CreateAmazonSQSClient(awsKey, secret);
+            _snsClient = AWSClientFactory.CreateAmazonSNSClient(awsKey, secret);
 
         }
         [TearDown]
+        //[Test]
         public void CleanUp()
         {
-            //var listQueuesRequest = new ListQueuesRequest().WithQueueNamePrefix("TESTING");
-            //var result = _amazonClient.ListQueues(listQueuesRequest);
-            //foreach (var queueUrl in result.ListQueuesResult.QueueUrl)
-            //{
-            //    _amazonClient.DeleteQueue(new DeleteQueueRequest().WithQueueUrl(queueUrl));
-            //}
+            var listQueuesRequest = new ListQueuesRequest().WithQueueNamePrefix(tempQueueName);
+            var result = _amazonClient.ListQueues(listQueuesRequest);
+            foreach (var queueUrl in result.ListQueuesResult.QueueUrl)
+            {
+                var subscriptions = _snsClient.ListSubscriptions(new ListSubscriptionsRequest());
+                foreach (var subscription in subscriptions.ListSubscriptionsResult.Subscriptions)
+                {
+                    // This is really bad, it's killing all subscriptions. We need to figure out a better
+                    // way to do this (or just create our own topic for the test.
+                    if (subscription.Protocol != "sqs") continue;
+                    _snsClient.Unsubscribe(new UnsubscribeRequest().WithSubscriptionArn(subscription.SubscriptionArn));
+                }
+                
+                //_amazonClient.DeleteQueue(new DeleteQueueRequest().WithQueueUrl(queueUrl));
+            }
 
 
+        }
+        [Test]
+        [Ignore("Only use this to clean up queues")]
+        public void delete_the_queue()
+        {
+            var listQueuesRequest = new ListQueuesRequest().WithQueueNamePrefix(tempQueueName);
+            var result = _amazonClient.ListQueues(listQueuesRequest);
+            foreach (var queueUrl in result.ListQueuesResult.QueueUrl)
+            {
+                _amazonClient.DeleteQueue(new DeleteQueueRequest().WithQueueUrl(queueUrl));
+            }
         }
         [Test]
         public void it_will_create_the_queue()
         {
             //lets just leave the logic in the ctor, it'll be singleton for consumers
-            var subscriber = new AmazonSqsSubscriber(_config);
+            
 
             var listQueuesResponse = _amazonClient.ListQueues(new ListQueuesRequest());
             var foundExpectedQueue = false;
@@ -76,23 +98,7 @@ namespace AmazonTests
         }
         
         [Test]
-        public void it_will_parse_messages()
-        {
-            var subscriber = new AmazonSqsSubscriber(_config);
-            
-            
-            var messageRequest = new SendMessageRequest()
-                .WithMessageBody("This is a test")
-                .WithQueueUrl(_config.SqsQueueUrl);
-            _amazonClient.SendMessage(messageRequest);
-
-            subscriber.Start();
-            
-            subscriber.Stop();
-
-        }
-        [Test]
-        public void the_message_is_only_processed_once()
+        public void the_message_is_proccessed()
         {
             var subscriber = new AmazonSqsSubscriber(_config);
 
@@ -101,10 +107,11 @@ namespace AmazonTests
            
             subscriber.Start();
            //Ugly, but I wanna make sure the message arrives
-            Thread.Sleep(3000);
+            while(subscriber.MessagesProcessed == 0){}
             
             subscriber.Stop();
-           
+            Assert.AreEqual(@event.SomeGuid, ConsoleWriter.LastSomeGuid);
+
         }
         
     }
@@ -115,11 +122,14 @@ namespace AmazonTests
         public int SomeInt { get; set; }
     }
     public class ConsoleWriter : IDomainEventHandler<TestEvent>{
+        public static Guid LastSomeGuid { get; private set; }
         public void Handle(TestEvent @event)
         {
             Console.WriteLine("SomeGuid: \t{0}",@event.SomeGuid);
             Console.WriteLine("SomeInt: \t {0}",@event.SomeInt);
             Console.WriteLine("SomeString: \t{0}",@event.SomeString);
+            LastSomeGuid = @event.SomeGuid;
+
         }
     }
 }

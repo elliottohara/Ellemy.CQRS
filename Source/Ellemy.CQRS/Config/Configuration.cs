@@ -1,6 +1,7 @@
 ﻿using Ellemy.CQRS.Command;
 using Ellemy.CQRS.Container;
 using Ellemy.CQRS.Event;
+using Ellemy.CQRS.Serializers;
 
 namespace Ellemy.CQRS.Config
 {
@@ -9,6 +10,7 @@ namespace Ellemy.CQRS.Config
         public Configuration()
         {
             EventPublisher = new NoOpPublisher();
+            Serializer = new EllemyJsonSerializer();
         }
         public Configuration HandlerFactoryOf(IHandlerFactory handlerFactory)
         {
@@ -30,9 +32,15 @@ namespace Ellemy.CQRS.Config
             ObjectBuilder = builder;
             return this;
         }
+        public Configuration WithSerializer(ISerializer serializer)
+        {
+            Serializer = serializer;
+            return this;
+        }
         public ICommandHandlerFactory CommandHandlerFactory { get; private set; }
         public IHandlerFactory HandlerFactory { get; private set; }
         public IEventPublisher EventPublisher { get; private set; }
         public IObjectBuilder ObjectBuilder { get; private set; }
+        public ISerializer Serializer { get; private set; }
     }
 }

@@ -21,6 +21,7 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         internal string TopicAccessResourceName { get; private set; }
         internal string SqsQueueName { get; private set; }
         internal ICollection<Assembly> EventAssemblies { get; private set; }
+        
         public string SqsQueueUrl { get; internal set; }
         
         

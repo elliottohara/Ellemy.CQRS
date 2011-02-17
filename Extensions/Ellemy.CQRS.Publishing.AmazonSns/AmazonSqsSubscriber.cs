@@ -21,14 +21,13 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         public AmazonSqsSubscriber(AmazonConfig config)
         {
             _config = config;
+            _client = Amazon.AWSClientFactory.CreateAmazonSQSClient(config.AccessKeyId, config.SecretKey);
             SetupQueue();
         }
 
         private void SetupQueue()
         {
-            if (TheQueueIsAlreadySet()) return;
-            var queueUrl = GetOrCreateQueueUrl();
-            _config.SqsQueueUrl = queueUrl;
+            new QueueManager(_client, _config).SetupQueue();
             SubscribeToTopic();
         }
 
@@ -63,33 +62,6 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
             var queueArn = attribute.GetQueueAttributesResult.Attribute.First().Value;
             const string format = @"{{""Version"": ""2008-10-17"",""Statement"": [{{""Resource"": ""{0}"", ""Effect"": ""Allow"", ""Sid"": ""1"", ""Action"": ""sqs:*"", ""Condition"": {{""StringEquals"": {{""aws:SourceArn"": ""{1}""}}}}, ""Principal"": {{""AWS"": ""*""}}}}]}}";
             return String.Format(format, queueArn, _config.TopicAccessResourceName);
-        }
-        private string GetOrCreateQueueUrl()
-        {
-            _client = Amazon.AWSClientFactory.CreateAmazonSQSClient(_config.AccessKeyId, _config.SecretKey);
-            var listQueuesResponse = _client.ListQueues(new ListQueuesRequest {QueueNamePrefix = _config.SqsQueueName});
-            var queueUrl = TheQueueUrlFrom(listQueuesResponse);
-            return queueUrl;
-        }
-
-        private string TheQueueUrlFrom(ListQueuesResponse listQueuesResponse)
-        {
-            string queueUrl;
-            if(listQueuesResponse.ListQueuesResult.QueueUrl.Count == 0)
-            {
-                var response = _client.CreateQueue(new CreateQueueRequest{QueueName = _config.SqsQueueName});
-                queueUrl = response.CreateQueueResult.QueueUrl;
-            }
-            else
-            {
-                queueUrl = listQueuesResponse.ListQueuesResult.QueueUrl[0];
-            }
-            return queueUrl;
-        }
-
-        private bool TheQueueIsAlreadySet()
-        {
-            return !String.IsNullOrEmpty(_config.SqsQueueUrl);
         }
         private bool _stopped;
         public void Stop()

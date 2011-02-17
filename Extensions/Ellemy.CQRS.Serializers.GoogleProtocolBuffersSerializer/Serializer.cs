@@ -44,6 +44,23 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
         
         public object GenerateProtoFor<T>(T thing)
         {
+            //var writer = new StreamWriter("c:\\Temp\\Test2.cs");
+            //writer.WriteLine("using ProtoBuf;");
+            //writer.WriteLine();
+            //writer.WriteLine("namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer.DataContracts{");
+            //writer.WriteLine("public class {0} {{",thing.GetType().Name);
+            //var propertyMarker = 1;
+            //foreach (var propertyInfo in thing.GetType().GetProperties())
+            //{
+            //    writer.WriteLine("[ProtoMember({0})]", propertyMarker++);
+            //    writer.WriteLine("public {0} {1}{{get;set;}}", propertyInfo.PropertyType,propertyInfo.Name);
+            //}
+            
+            //writer.WriteLine("}");
+            //writer.WriteLine("}");
+            //writer.Close();
+            //return null;
+            
             var compileUnit = new CodeCompileUnit();
             var nameSpace = new CodeNamespace("Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts");
             nameSpace.Imports.Add(new CodeNamespaceImport("ProtoBuf"));
@@ -57,22 +74,26 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
             var memberNumber = 1;
             foreach (var propertyInfo in thing.GetType().GetProperties())
             {
-                var @public = new CodeMemberProperty();
+                var @public = new CodeMemberField();
                 var protoBuffAttribute = new CodeAttributeDeclaration("ProtoMember");
                 var attributeArgument = new CodeAttributeArgument(new CodePrimitiveExpression(memberNumber++));
                 protoBuffAttribute.Arguments.Add(attributeArgument);
+                @public.Type = new CodeTypeReference(propertyInfo.PropertyType.FullName);
                 @public.Attributes = MemberAttributes.Public;
                 @public.Name = propertyInfo.Name;
                 @public.CustomAttributes.Add(protoBuffAttribute);
+                
                 @class.Members.Add(@public);
 
             }
             
             compileUnit.Namespaces.Add(nameSpace);
             compileUnit.ReferencedAssemblies.Add("protobuf-net.dll");
-            var provider = CodeDomProvider.CreateProvider("CSharp");
+            var provider = new CSharpCodeProvider();
             var writer = new IndentedTextWriter(new StreamWriter(@"C:\Temp\Test.cs", false));
-            provider.GenerateCodeFromNamespace(nameSpace,writer,new CodeGeneratorOptions());
+            provider.GenerateCodeFromCompileUnit(compileUnit, writer, new CodeGeneratorOptions());
+            writer.Close();
+            
             return nameSpace;
             
         }

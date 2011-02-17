@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
+using Amazon;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Ellemy.CQRS.Event;
 
-namespace Ellemy.CQRS.Publishing.AmazonSns
+namespace Ellemy.CQRS.Publishing.Amazon
 {
     public class AmazonSqsSubscriber
     {
@@ -17,7 +18,7 @@ namespace Ellemy.CQRS.Publishing.AmazonSns
         public AmazonSqsSubscriber(AmazonConfig config)
         {
             _config = config;
-            _client = Amazon.AWSClientFactory.CreateAmazonSQSClient(config.AccessKeyId, config.SecretKey);
+            _client = AWSClientFactory.CreateAmazonSQSClient(config.AccessKeyId, config.SecretKey);
             SetupQueue();
         }
 

@@ -7,7 +7,7 @@ using Amazon.SQS.Model;
 using Ellemy.CQRS.Config;
 using Ellemy.CQRS.Event;
 using Ellemy.CQRS.Implementations.StructureMap;
-using Ellemy.CQRS.Publishing.AmazonSns;
+using Ellemy.CQRS.Publishing.Amazon;
 using NUnit.Framework;
 
 namespace AmazonTests

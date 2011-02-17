@@ -138,9 +138,9 @@
       <Project>{B8E27524-C377-4EBF-9A3D-3BEC6F6BA573}</Project>
       <Name>Ellemy.CQRS.Implementations.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Extensions\Ellemy.CQRS.Publishing.AmazonSns\Ellemy.CQRS.Publishing.AmazonSns.csproj">
+    <ProjectReference Include="..\Extensions\Ellemy.CQRS.Publishing.AmazonSns\Ellemy.CQRS.Publishing.Amazon.csproj">
       <Project>{A44A393D-6E84-432B-9CA0-2F0211B74BFA}</Project>
-      <Name>Ellemy.CQRS.Publishing.AmazonSns</Name>
+      <Name>Ellemy.CQRS.Publishing.Amazon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Source\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>

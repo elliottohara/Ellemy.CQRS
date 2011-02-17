@@ -1,10 +1,8 @@
-using System;
-using System.Web.Script.Serialization;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Ellemy.CQRS.Event;
 
-namespace Ellemy.CQRS.Publishing.AmazonSns
+namespace Ellemy.CQRS.Publishing.Amazon
 {
     public class AmazonPublisher : IEventPublisher
     {

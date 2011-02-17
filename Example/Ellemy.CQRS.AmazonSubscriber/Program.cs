@@ -1,5 +1,5 @@
 ﻿using Ellemy.CQRS.Config;
-using Ellemy.CQRS.Publishing.AmazonSns;
+using Ellemy.CQRS.Publishing.Amazon;
 
 namespace Ellemy.CQRS.AmazonSubscriber
 {

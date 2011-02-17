@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.Reflection;
 using Ellemy.CQRS.Config;
-using Ellemy.CQRS.Event;
 
-namespace Ellemy.CQRS.Publishing.AmazonSns
+namespace Ellemy.CQRS.Publishing.Amazon
 {
     public class AmazonConfig
     {

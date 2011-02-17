@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.UnitTests", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.Mvc", "Source\Ellemy.Mvc\Ellemy.Mvc.csproj", "{639748A0-F957-4A32-BA84-17606FDCC58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.Publishing.AmazonSns", "Extensions\Ellemy.CQRS.Publishing.AmazonSns\Ellemy.CQRS.Publishing.AmazonSns.csproj", "{A44A393D-6E84-432B-9CA0-2F0211B74BFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.Publishing.Amazon", "Extensions\Ellemy.CQRS.Publishing.AmazonSns\Ellemy.CQRS.Publishing.Amazon.csproj", "{A44A393D-6E84-432B-9CA0-2F0211B74BFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellemy.CQRS.AmazonSubscriber", "Example\Ellemy.CQRS.AmazonSubscriber\Ellemy.CQRS.AmazonSubscriber.csproj", "{261696F6-A896-4C2A-ABF6-05A32691138D}"
 EndProject

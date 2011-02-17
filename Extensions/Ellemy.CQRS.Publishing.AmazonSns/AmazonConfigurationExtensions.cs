@@ -1,6 +1,6 @@
 ﻿using Ellemy.CQRS.Config;
 
-namespace Ellemy.CQRS.Publishing.AmazonSns
+namespace Ellemy.CQRS.Publishing.Amazon
 {
     public static class AmazonConfigurationExtensions
     {

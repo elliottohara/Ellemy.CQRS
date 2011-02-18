@@ -51,13 +51,13 @@ namespace GoogleProtocolBufferTests
                 var startedAt = DateTime.Now;
                 var result = (TestThing) serializer.Deserialize(output, typeof (TestThing));
                 Console.WriteLine("took {0} milliseconds",DateTime.Now.Subtract(startedAt).TotalMilliseconds);
-                Console.WriteLine(result.Guid);
-                Console.WriteLine(result.Int);
-                Console.WriteLine(result.String);
+                
                 var startedJsonAt = DateTime.Now;
                 jsonSerializer.Deserialize(json, typeof (TestThing));
                 Console.WriteLine("JSON took {0} milliseconds",DateTime.Now.Subtract(startedJsonAt).TotalMilliseconds);
-
+                Console.WriteLine(result.Guid);
+                Console.WriteLine(result.Int);
+                Console.WriteLine(result.String);
             }
         }
     }

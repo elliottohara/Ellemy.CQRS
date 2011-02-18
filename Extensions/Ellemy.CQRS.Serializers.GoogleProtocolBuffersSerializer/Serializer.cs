@@ -16,7 +16,7 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
         }
         public object Deserialize(string input, Type desiredType)
         {
-            var bytes = ASCIIEncoding.ASCII.GetBytes(input.Trim());
+            var bytes = ASCIIEncoding.ASCII.GetBytes(input);
             var @event = Activator.CreateInstance(desiredType);
             using (var stream = new MemoryStream(bytes))
             {

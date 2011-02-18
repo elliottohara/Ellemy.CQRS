@@ -21,13 +21,13 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
         public object Deserialize(string input, Type desiredType)
         {
             var stream = new StreamReader(input);
-            return ProtoBuf.Serializer.NonGeneric.Deserialize(desiredType, stream.BaseStream);
+           return ProtoBuf.Serializer.NonGeneric.Deserialize(desiredType, stream.BaseStream);
         }
 
         public object DeserializeObject(string input)
         {
-            var stream = new StreamReader(input);
-            return ProtoBuf.Serializer.NonGeneric.Deserialize(typeof(object),stream.BaseStream);
+            var stream = new MemoryStream(ASCIIEncoding.ASCII.GetBytes(input));
+            return ProtoBuf.Serializer.NonGeneric.Deserialize(typeof(object),stream);
         }
         public string Serialize(object input)
         {

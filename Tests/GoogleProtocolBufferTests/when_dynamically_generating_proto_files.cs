@@ -25,19 +25,14 @@ namespace GoogleProtocolBufferTests
 
         }
         [Test]
-        public void make_pronto()
+        [Ignore("This is a todo, I just don't wanna forget where I'm at")]
+        public void serialize_then_deserialize()
         {
-            var testThing = new TestThing { Int = 1, Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = "Test" };
-            var pg = new ProtoGenerator();
-            var t = pg.GenerateProtoFor(testThing);
-            foreach (var property in testThing.GetType().GetProperties())
-            {
-                var setterForT = t.GetType().GetField(property.Name);
-                var value = property.GetValue(testThing, null);
-                setterForT.SetValue(t,value);
-            }
             var serializer = new Serializer();
-            Console.WriteLine(serializer.Serialize(t));
+            var testThing = new TestThing {Enum1 = Enum1.Val3, Guid = Guid.NewGuid(), Int = 5, String = "Some STring"};
+            var output = serializer.Serialize(testThing);
+            var result = serializer.DeserializeObject(output);
+            Console.WriteLine(result);
         }
     }
     public class TestThing

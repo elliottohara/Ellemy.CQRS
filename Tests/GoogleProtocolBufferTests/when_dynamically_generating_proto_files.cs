@@ -19,7 +19,7 @@ namespace GoogleProtocolBufferTests
             var random = new Random();
             for(var times = 1; times<100;times++)
             {
-                var testThing = new TestThing { Int = random.Next(), Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = Guid.NewGuid().ToString() };
+                var testThing = new TestThing { Int = random.Next(), Guid = Guid.NewGuid(), String = Guid.NewGuid().ToString() };
             
                 var startedAt = DateTime.Now;
                 var result = serializer.Serialize(testThing);
@@ -38,22 +38,35 @@ namespace GoogleProtocolBufferTests
         }
         
         [Test]
-        [Ignore("This is a todo, I just don't wanna forget where I'm at")]
         public void serialize_then_deserialize()
         {
             var serializer = new Serializer();
-            var testThing = new TestThing {Enum1 = Enum1.Val3, Guid = Guid.NewGuid(), Int = 5, String = "Some STring"};
-            var output = serializer.Serialize(testThing);
-            var result = serializer.DeserializeObject(output);
-            Console.WriteLine(result);
+            var jsonSerializer = new Ellemy.CQRS.Serializers.EllemyJsonSerializer();
+            for (var i = 0; i < 35; i++)
+            {
+                Console.WriteLine("**************************");
+                var testThing = new TestThing {Guid = Guid.NewGuid(), Int = i, String = "Some STring" + i };
+                var output = serializer.Serialize(testThing);
+                var json = jsonSerializer.Serialize(testThing);
+                var startedAt = DateTime.Now;
+                var result = (TestThing) serializer.Deserialize(output, typeof (TestThing));
+                Console.WriteLine("took {0} milliseconds",DateTime.Now.Subtract(startedAt).TotalMilliseconds);
+                Console.WriteLine(result.Guid);
+                Console.WriteLine(result.Int);
+                Console.WriteLine(result.String);
+                var startedJsonAt = DateTime.Now;
+                jsonSerializer.Deserialize(json, typeof (TestThing));
+                Console.WriteLine("JSON took {0} milliseconds",DateTime.Now.Subtract(startedJsonAt).TotalMilliseconds);
+
+            }
         }
     }
     public class TestThing
     {
-        public Int32 Int { get; set; }
+        public int Int { get; set; }
         public string String { get; set; }
         public Guid Guid { get; set; }
-        public Enum1 Enum1 { get; set; }
+        //public Enum1 Enum1 { get; set; }
     }
     public enum Enum1
     {

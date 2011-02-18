@@ -15,7 +15,14 @@ namespace GoogleProtocolBufferTests
         {
             var serializer = new Serializer();
             var testThing = new TestThing {Int = 1, Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = "Test"};
+            for(var times = 1; times<100;times++)
+            {
+                var startedAt = DateTime.Now;
+                serializer.Serialize(testThing);
+                Console.WriteLine("Took {0}", DateTime.Now.Subtract(startedAt).TotalMilliseconds);
+            }
             Console.WriteLine(serializer.Serialize(testThing));
+
         }
         [Test]
         public void make_pronto()

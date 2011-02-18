@@ -53,10 +53,14 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
     }
     public class ProtoGenerator
     {
+        public static Dictionary<string,Type > Cache = new Dictionary<string, Type>();
+        
         //TODOL this performs like crap... lets singleton and cache this puppy
         public object GenerateProtoFor<T>(T thing)
         {
-            
+            if (Cache.ContainsKey(thing.GetType().FullName))
+                return Activator.CreateInstance(Cache[thing.GetType().FullName]);
+
             var nameSpace = new CodeNamespace("Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts");
             nameSpace.Imports.Add(new CodeNamespaceImport("ProtoBuf"));
             nameSpace.Imports.Add(new CodeNamespaceImport(thing.GetType().Namespace));
@@ -98,6 +102,10 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
             {
                 throw new InvalidOperationException(results.Errors[0].ErrorText);
             }
+            var typeName = "Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts." +
+                           thing.GetType().Name;
+            Cache[typeName] = results.CompiledAssembly.GetType(typeName);
+
             return
                 results.CompiledAssembly.CreateInstance("Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts." +
                                                         thing.GetType().Name);

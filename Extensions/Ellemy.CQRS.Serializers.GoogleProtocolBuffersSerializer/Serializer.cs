@@ -104,7 +104,7 @@ namespace Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer
             }
             var typeName = "Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts." +
                            thing.GetType().Name;
-            Cache[typeName] = results.CompiledAssembly.GetType(typeName);
+            Cache[thing.GetType().FullName] = results.CompiledAssembly.GetType(typeName);
 
             return
                 results.CompiledAssembly.CreateInstance("Ellemy.CQRS.Serializers.GoogleProtocolBuffers.Contracts." +

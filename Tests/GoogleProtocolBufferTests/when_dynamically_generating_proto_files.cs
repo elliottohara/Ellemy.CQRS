@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer;
 using NUnit.Framework;
 using ProtoBuf;
@@ -11,19 +12,31 @@ namespace GoogleProtocolBufferTests
     public class when_dynamically_generating_proto_files
     {
         [Test]
-        public void try_it()
+        public void try_it_and_compare_to_EllemyJson()
         {
             var serializer = new Serializer();
-            var testThing = new TestThing {Int = 1, Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = "Test"};
+            var jsonSerializer = new Ellemy.CQRS.Serializers.EllemyJsonSerializer();
+            var random = new Random();
             for(var times = 1; times<100;times++)
             {
+                var testThing = new TestThing { Int = random.Next(), Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = Guid.NewGuid().ToString() };
+            
                 var startedAt = DateTime.Now;
-                serializer.Serialize(testThing);
-                Console.WriteLine("Took {0}", DateTime.Now.Subtract(startedAt).TotalMilliseconds);
+                var result = serializer.Serialize(testThing);
+                Console.WriteLine("Took {0} milliseconds to serialize with protocol buffer", DateTime.Now.Subtract(startedAt).TotalMilliseconds);
+                Console.WriteLine(result);
+                Console.WriteLine("Size {0}", ASCIIEncoding.ASCII.GetBytes(result).Length);
+                var startedJsonAt = DateTime.Now;
+                var jsonResult = jsonSerializer.Serialize(testThing);
+                Console.WriteLine("took {0} milliseconds to use EllemyJsonSerializer",DateTime.Now.Subtract(startedJsonAt).TotalMilliseconds);
+                Console.WriteLine(jsonResult);
+                Console.WriteLine("Size {0}", ASCIIEncoding.ASCII.GetBytes(jsonResult).Length);
+                
             }
-            Console.WriteLine(serializer.Serialize(testThing));
+            
 
         }
+        
         [Test]
         [Ignore("This is a todo, I just don't wanna forget where I'm at")]
         public void serialize_then_deserialize()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer;
 using NUnit.Framework;
 using ProtoBuf;
@@ -21,19 +22,22 @@ namespace GoogleProtocolBufferTests
         {
             var testThing = new TestThing { Int = 1, Enum1 = Enum1.Val1, Guid = Guid.NewGuid(), String = "Test" };
             var pg = new ProtoGenerator();
-            pg.GenerateProtoFor(testThing);
+            var t = pg.GenerateProtoFor(testThing);
+            foreach (var property in testThing.GetType().GetProperties())
+            {
+                var setterForT = t.GetType().GetField(property.Name);
+                var value = property.GetValue(testThing, null);
+                setterForT.SetValue(t,value);
+            }
+            var serializer = new Serializer();
+            Console.WriteLine(serializer.Serialize(t));
         }
     }
-    [ProtoContract]
     public class TestThing
     {
-        [ProtoMember(1)]
-        public int Int { get; set; }
-        [ProtoMember(2)]
+        public Int32 Int { get; set; }
         public string String { get; set; }
-        [ProtoMember(3)]
         public Guid Guid { get; set; }
-        [ProtoMember(4)]
         public Enum1 Enum1 { get; set; }
     }
     public enum Enum1

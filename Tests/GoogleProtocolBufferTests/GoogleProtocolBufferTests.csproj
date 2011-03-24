@@ -53,8 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="when_dynamically_generating_proto_files.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_dynamically_generating_proto_files.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Extensions\Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer\Ellemy.CQRS.Serializers.GoogleProtocolBuffersSerializer.csproj">

@@ -53,8 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProtocolBufferGenerator_tests.cs" />
-    <Compile Include="using_the_GoogleProtocolBuffer_serializer.cs" />
+    <Compile Include="when_dynamically_generating_proto_files.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

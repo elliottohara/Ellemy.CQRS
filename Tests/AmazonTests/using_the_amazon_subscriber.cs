@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Amazon;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
@@ -17,13 +18,21 @@ namespace AmazonTests
     {
         private AmazonConfig _config;
         private AmazonSQS _amazonClient;
-        private const string awsKey = "AKIAIN2KJH4QJIUV7CGQ";
-        private const string secret = "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";
+        private string awsKey;
+        private string secret;
         private const string topicArn = "arn:aws:sns:us-east-1:451419498740:EventMessage";
         private string tempQueueName;
         private AmazonPublisher _publisher;
         private AmazonSimpleNotificationService _snsClient;
 
+        [TestFixtureSetUp]
+        public void set_aws_and_secret_key()
+        {
+            var keyReader = new StreamReader(@"c:\Temp\amazonkey.txt");
+            awsKey = keyReader.ReadToEnd();
+            var secretReader = new StreamReader(@"c:\Temp\amazonsecret.txt");
+            secret = secretReader.ReadToEnd();
+        }
         [SetUp]
         public void Arrange()
         {

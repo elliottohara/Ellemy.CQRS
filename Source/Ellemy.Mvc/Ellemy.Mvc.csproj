@@ -56,7 +56,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ellemy.CQRS\Ellemy.CQRS.csproj">
       <Project>{D000DC1E-9BDC-4EC8-A1A1-D596B41DD6B9}</Project>
-      <Name>Ellemy.CQRS</Name>
+      <Name>Ellemy.CQRS %28Ellemy.CQRS\Ellemy.CQRS%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

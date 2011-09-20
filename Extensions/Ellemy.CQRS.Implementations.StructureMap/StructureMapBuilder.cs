@@ -24,7 +24,20 @@ namespace Ellemy.CQRS.Implementations.StructureMap
 
         public ICommandHandler<TCommand> GetHandlerFor<TCommand>() where TCommand : ICommand
         {
-            return _container.GetInstance<ICommandHandler<TCommand>>();
+            var commandInterface = typeof (TCommand).GetInterfaces().FirstOrDefault(t => t.GetInterface("ICommand") != null);
+            if(commandInterface == null)
+                return  _container.GetInstance<ICommandHandler<TCommand>>();
+            var openGeneric = typeof (ICommandHandler<>);
+            return (ICommandHandler<TCommand>)_container.GetInstance(openGeneric.MakeGenericType(commandInterface));
+        }
+
+        public object GetHandlerFor(Type command)
+        {
+            //if (typeof(ICommand).IsAssignableFrom(command))
+            //    throw new InvalidOperationException(String.Format("type {0} does not implement ICommand.", command.Name));
+
+            var t = typeof(ICommandHandler<>);
+            return _container.GetInstance(t.MakeGenericType(command));
         }
 
         public IEnumerable<object> BuildAll(Type type)

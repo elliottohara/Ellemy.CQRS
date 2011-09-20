@@ -37,6 +37,7 @@ namespace Ellemy.CQRS.Implementations.StructureMap
                 scanner.AssemblyContainingType<TCommandExecutor>();
                 scanner.ConnectImplementationsToTypesClosing(
                     typeof(ICommandHandler<>));
+                scanner.Convention<CloseCommandsConvention>();
             }));
             return config;
         }

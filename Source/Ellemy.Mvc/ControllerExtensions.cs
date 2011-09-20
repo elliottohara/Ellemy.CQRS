@@ -78,6 +78,13 @@ namespace Ellemy.Mvc
             return controller.Request.IsAjaxRequest() ? ajax() : standard();
         }
 
+        public static ActionResult Form<TModel>(this Controller controller,Action<TModel> buildUpModel = null,string viewName=null)
+        {
+            var model = Container.GetInstance<TModel>();
+            if(buildUpModel!=null) buildUpModel(model);
+            return Contextual(controller, View(controller, viewName, model),
+                              () => new JsonResult {Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet});
+        }
         public static ActionResult Query<TQuery>(this Controller controller, Action<TQuery> buildUpQuery = null,string viewName = null) where TQuery:IQuery
         {
             var query = Container.GetInstance<TQuery>();
